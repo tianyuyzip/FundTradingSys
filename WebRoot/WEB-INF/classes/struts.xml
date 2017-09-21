@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.action.extension" value="do"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/> 
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.objectFactory.spring.autoWire" value="name" />
+
+    <package name="base-package" abstract="true" extends="struts-default">
+    
+    </package>
+    
+    <package name="fund-package" namespace="/fund" extends="base-package">
+        <action name="*" class="fundAction" method="{1}">
+        	 <result name="input_page">../jsps/fund/input_fund.jsp</result>
+        	 <result name="load_action" type="redirectAction">loadFunds</result>
+        	 <result name="load_page">../jsps/fund/list_fund.jsp</result>
+        	 <result name="update_page">../jsps/fund/update_fund.jsp</result>
+        </action>
+    </package>  
+    
+    <package name="client-package" namespace="/client" extends="base-package">
+        <action name="*" class="clientAction" method="{1}">
+        	 <result name="input_page">../jsps/client/input_client.jsp</result>
+        	 <result name="load_action" type="redirectAction">loadClients</result>
+        	 <result name="load_page">../jsps/client/list_client.jsp</result>
+        	 <result name="toinput_id_page">../jsps/client/input_id.jsp</result>
+        	 <result name="update_page">../jsps/client/update_client.jsp</result>
+        </action>
+    </package>   
+    
+    
+    <package name="account-package" namespace="/account" extends="base-package">
+        <action name="*" class="accountAction" method="{1}">
+        	 <result name="input_page">../jsps/account/input_account.jsp</result>        	 
+        	 <result name="result_action" type="redirectAction">resultAccount</result>
+        	 <result name="create_error_page">../jsps/account/create_error.jsp</result>
+        	 <result name="create_success_page">../jsps/account/create_success.jsp</result>
+        </action>
+    </package>   
+    
+    <package name="acctransinfo-package" namespace="/acctransinfo" extends="base-package">
+        <action name="*" class="accountTransinfoAction" method="{1}">
+        	 <result name="put_pwd_page">../jsps/security/input_account_security.jsp</result>
+        	 <result name="save_money_page">../jsps/account/save_money.jsp</result>
+        	 <result name="select_function_page">../jsps/account/select_function.jsp</result>
+        	 <result name="load_account_page">../jsps/account/list_account.jsp</result>
+        	 <result name="frozen_page">../jsps/account/frozen_account.jsp</result>
+        	 <result name="load_account_action" type="redirectAction">loadAccounts</result>
+        	 <result name="withdraw_money_page">../jsps/account/withdraw_money.jsp</result>
+        	 <result name="select_function_action" type="redirectAction">selectType</result>
+        	 <result name="excute_success_page">../jsps/account/excute_success.jsp</result>
+        	 <result name="list_trans_page">../jsps/account/list_trans.jsp</result>
+        </action>
+    </package> 
+    
+    <package name="transinfo-package" namespace="/transinfo" extends="base-package">
+        <action name="toInput" class="transinfoAction" method="toInput">
+        	 <result name="input_page">../jsps/transinfo/fund_transinfo.jsp</result>
+        </action>
+        <action name="findByName" class="transinfoAction" method="findByName">
+        </action>
+        <action name="getPrice" class="transinfoAction" method="getPrice">
+        </action>
+        <action name="inputPwd" class="transinfoAction" method="inputPwd">
+        	<result name="check_page">../jsps/security/check_security.jsp</result>
+        </action>
+        <action name="checkAccountPwd" class="transinfoAction" method="checkAccountPwd">
+        	 <result name="create_action" type="redirectAction">createTransinfo</result>
+        	 <result name="check_page">../jsps/security/check_security.jsp</result>
+        </action> 
+        <action name="createTransinfo" class="transinfoAction" method="createTransinfo">
+       		 <result name="input_page">../jsps/transinfo/fund_transinfo.jsp</result>
+       		 <result name="excute_fund_page">../jsps/transinfo/create_success.jsp</result>
+        </action>   
+        
+        <action name="loadTransinfos" class="transinfoAction" method="loadTransinfos">
+        	<result name="load_page">../jsps/transinfo/list_transinfo.jsp</result>
+        </action>     
+    </package> 
+    
+      <package name="security-package" namespace="/security" extends="base-package"> 
+    
+        <action name="*" class="securityAction" method="{1}">
+           <result name="login_page">../jsps/login.jsp</result>
+           <result name="main_action" type="redirectAction">main</result>
+           <result name="main_page">../jsps/main.jsp</result>
+        </action>                                      
+    
+    </package> 
+
+</struts>
+
+ 

@@ -1,0 +1,13 @@
+hilo(high low)也可以省略table和column配置，其默认的表为hibernate_unique_key，列为next_hi
+
+<id name="id" column="id">
+<generator class="hilo">
+<param name="max_lo">100</param>
+</generator>
+</id>
+hilo生成器生成主键的过程（以hibernate_unique_key表，next_hi列为例）：
+
+获得hi值：读取并记录数据库的hibernate_unique_key表中next_hi字段的值，数据库中此字段值加1保存。
+获得lo值：从0到max_lo循环取值，差值为1，当值为max_lo值时，重新获取hi值，然后lo值继续从0到max_lo循环。
+根据公式 hi * (max_lo + 1) + lo计算生成主键值。
+注意：当hi值是0的时候，那么第一个值不是0*(max_lo+1)+0=0，而是lo跳过0从1开始，直接是1、2、3……

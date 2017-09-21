@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="edu.fjut.fundsys.domain">
+
+   <class name="Client" table="tbl_client">
+      
+      <id name="idCardNo" type="string" column="id_card_no" length="18">
+         <generator class="assigned"></generator>
+      </id>
+      
+      <property name="clientName" type="java.lang.String" length="30" column="client_name" not-null="true"></property>
+      <property name="clientSex" type="string" column="client_sex"></property>
+      <property name="clientPhone" type="string" column="client_phone" length="20"></property>
+      <property name="clientAddress" type="string" column="client_address" length="20"></property>
+      <property name="clientEmail" type="string" column="client_email" length="50"></property>
+      <property name="clientHobby" type="string" column="client_hobby" length="50"></property>
+      <property name="clientCreateDate" type="java.util.Date" column="client_create_date" not-null="true"></property>
+      
+   </class>
+
+</hibernate-mapping>

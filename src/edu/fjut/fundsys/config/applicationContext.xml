@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd" [
+<!ENTITY contextInclude SYSTEM "org/springframework/web/portlet/context/WEB-INF/contextInclude.xml">
+]>
+
+<beans>
+
+    <!-- Spring提供了一个数据源，类似连接池的功能 -->
+    <bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost:3306/testdb" />  
+        <property name="username" value="root" />  
+        <property name="password" value="123456" />  
+    </bean>
+    
+    <!-- hibernate session factory -->
+    <bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>	
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQL5Dialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>				
+			</props>
+		</property>
+		<property name="mappingResources">
+		   <list>
+		      <value>/edu/fjut/fundsys/domain/Fund.hbm.xml</value>
+		      <value>/edu/fjut/fundsys/domain/Client.hbm.xml</value>
+		      <value>/edu/fjut/fundsys/domain/FinancialAccount.hbm.xml</value>
+		      <value>/edu/fjut/fundsys/domain/FundTransinfo.hbm.xml</value>
+		      <value>/edu/fjut/fundsys/domain/AccountTransinfo.hbm.xml</value>
+		      <value>/edu/fjut/fundsys/domain/User.hbm.xml</value>
+		   </list>
+		</property>
+    </bean>
+        
+    <bean id="fundDao" class="edu.fjut.fundsys.dao.FundDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="fundService" class="edu.fjut.fundsys.service.FundServiceImpl">
+        <property name="fundDao" ref="fundDao"></property>
+    </bean>
+    
+    <bean id="fundAction" class="edu.fjut.fundsys.action.FundAction" scope="prototype">
+        <property name="fundService" ref="fundService"></property>
+    </bean>
+    
+    <bean id="clientDao" class="edu.fjut.fundsys.dao.ClientDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="clientService" class="edu.fjut.fundsys.service.ClientServiceImpl">
+        <property name="clientDao" ref="clientDao"></property>
+    </bean>
+    
+    <bean id="clientAction" class="edu.fjut.fundsys.action.ClientAction" scope="prototype">
+        <property name="clientService" ref="clientService"></property>
+        <property name="accountService" ref="accountService"></property>
+    </bean>
+    
+    <bean id="accountDao" class="edu.fjut.fundsys.dao.AccountDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="accountService" class="edu.fjut.fundsys.service.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+    
+    <bean id="accountAction" class="edu.fjut.fundsys.action.FinancialAccountAction" scope="prototype">
+        <property name="accountService" ref="accountService"></property>
+        <property name="clientService" ref="clientService"></property>
+    </bean>
+    
+    <bean id="transinfoDao" class="edu.fjut.fundsys.dao.FundTransinfoDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="transinfoService" class="edu.fjut.fundsys.service.FundTransinfoServiceImpl">
+        <property name="transinfoDao" ref="transinfoDao"></property>
+    </bean>
+    
+    <bean id="transinfoAction" class="edu.fjut.fundsys.action.TransinfoAction" scope="prototype">
+        <property name="transinfoService" ref="transinfoService"></property>
+        <property name="fundService" ref="fundService"></property>
+  		<property name="accountService" ref="accountService"></property>
+    </bean>
+    
+    <bean id="accountTransinfoDao" class="edu.fjut.fundsys.dao.AccountTransinfoDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="accountTransinfoService" class="edu.fjut.fundsys.service.AccountTransinfoServiceImpl">
+        <property name="accountTransinfoDao" ref="accountTransinfoDao"></property>
+    </bean>
+    
+    <bean id="accountTransinfoAction" class="edu.fjut.fundsys.action.AccountTransinfoAction" scope="prototype">
+        <property name="accountTransinfoService" ref="accountTransinfoService"></property>
+		<property name="accountService" ref="accountService"></property>
+    </bean>   
+    
+    <bean id="userDao" class="edu.fjut.fundsys.dao.UserDaoHibernateImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>    
+    
+    <bean id="userService" class="edu.fjut.fundsys.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>  
+    
+    <bean id="securityAction" class="edu.fjut.fundsys.action.SecurityAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+    </bean>            
+     
+</beans>

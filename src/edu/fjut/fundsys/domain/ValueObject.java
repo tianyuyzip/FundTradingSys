@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package edu.fjut.fundsys.domain;
+
+/**
+ * @author ÃÔ”Ó
+ *
+ */
+public class ValueObject {
+
+}

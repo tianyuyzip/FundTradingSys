@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="edu.fjut.fundsys.domain">
+
+   <class name="FinancialAccount" table="tbl_financial_account">
+      
+      <id name="accNo" type="java.lang.Integer" column="acc_no">
+         <generator class="increment"></generator>
+      </id>
+      
+       <property name="accName" type="java.lang.String" length="30" column="acc_name" not-null="true"></property>
+      <property name="accPwd" type="java.lang.String" length="6" column="acc_pwd" not-null="true"></property>
+      <property name="accStatus" type="string" column="acc_status" length="1"></property>
+      <property name="accAmount" type="double" column="acc_amount" not-null="true"></property>
+      <property name="accCreateDate" type="java.util.Date" column="acc_create_date" not-null="true"></property>
+      <many-to-one name="client" class="Client" column="id_card_no" fetch="select" lazy="false"></many-to-one>
+      
+   </class>
+
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="edu.fjut.fundsys.domain">
+
+   <class name="Fund" table="tbl_fund">
+      
+      <id name="fundNo" type="java.lang.Integer" column="fund_no">
+         <generator class="increment"></generator>
+      </id>
+      
+      <property name="fundName" type="java.lang.String" length="40" column="fund_name" not-null="true" unique="true"></property>
+      <property name="fundPrice" type="double" column="fund_price"  not-null="true"></property>
+      <property name="fundStatus" type="string" column="fund_status" length="1" not-null="true"></property>
+      <property name="fundDescription" type="string" column="fund_description" length="100"></property>
+      <property name="fundCreateDate">  
+      	<column name="fund_create_date" sql-type="timestamp" not-null="true" length="19"/>
+      </property>
+      
+   </class>
+
+</hibernate-mapping>
